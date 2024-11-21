@@ -8,11 +8,11 @@ public class TaskManager {
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private int nextId = 1;
 
-    public int generateId() {
+    private int generateId() {
         return nextId++;
     }
 
-    public void add(Task task) {
+    public void addTask(Task task) {
         tasks.put(task.getId(), task);
     }
 
@@ -32,10 +32,10 @@ public class TaskManager {
         return tasks.get(id);
     }
 
-    public void addEpic(String title, String description) {
-        int id = generateId();
-        Epic epic = new Epic(id, title, description);
-        epics.put(id, epic);
+    public void addEpic(Epic epic) {
+        epic.setId(generateId());
+        epics.put(epic.getId(), epic);
+        updateEpicStatus(epic);
     }
 
     // Получение эпика по ID
@@ -55,21 +55,31 @@ public class TaskManager {
 
     // Добавление подзадачи
     public void addSubtask(Subtask subtask) {
+        subtask.setId(generateId());
         subtasks.put(subtask.getId(), subtask);
+
         Epic epic = epics.get(subtask.getEpicId());
         if (epic != null) {
             epic.addSubTask(subtask);
+            updateEpicStatus(epic);
         }
-    }
-
-    // Получение подзадачи по ID
-    public Subtask getSubtaskById(int id) {
-        return subtasks.get(id);
     }
 
     // Удаление подзадачи по ID
     public void removeSubtaskById(int id) {
-        subtasks.remove(id);
+        Subtask subtask = subtasks.get(id);
+        if (subtask != null) {
+            Epic epic = epics.get(subtask.getEpicId());
+            if (epic != null) {
+                epic.removeSubtask(subtask);
+                updateEpicStatus(epic); // Обновляем статус эпика после удаления подзадачи
+            }
+            subtasks.remove(id);
+        }
+    }
+
+    public Subtask getSubtaskById(int id) {
+        return subtasks.get(id);
     }
 
     // Получение всех подзадач
@@ -89,7 +99,7 @@ public class TaskManager {
     }
 
     // Обновление статуса эпика на основе статусов подзадач
-    public void updateEpicStatus(Epic epic) {
+    private void updateEpicStatus(Epic epic) {
         if (epic.getSubTasks().isEmpty()) {
             epic.setStatus(TaskStatus.NEW);
             return;

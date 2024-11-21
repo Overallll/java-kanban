@@ -1,16 +1,15 @@
 import java.util.Objects;
 
 public class Task {
-    private final int id;            // Уникальный идентификатор задачи
-    private final String title;       // Название задачи
-    private final String description;// Описание задачи
-    private TaskStatus status;       // Статус задачи
+    protected int id;            // Уникальный идентификатор задачи
+    protected String title;       // Название задачи
+    protected String description;// Описание задачи
+    protected TaskStatus status;       // Статус задачи
 
-    public Task(int id, String title, String description, TaskStatus status) {
-        this.id = id;  // Уникальный идентификатор
+    public Task(String title, String description) {
         this.title = title;
         this.description = description;
-        this.status = status.NEW;
+        this.status = TaskStatus.NEW;
     }
 
     @Override
@@ -44,6 +43,18 @@ public class Task {
 
     public void setStatus(TaskStatus status) {
         this.status = status;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
