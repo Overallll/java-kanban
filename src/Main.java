@@ -3,7 +3,13 @@ public class Main {
         TaskManager taskManager = new TaskManager();
 
         Epic epic1 = new Epic("Учеба", "Организация учебного процесса после работы");
+
         taskManager.addEpic(epic1);
+        System.out.println(epic1);
+        Epic updatedEpic = new Epic("Учеба", "Уделять время каждый вечер для учебы");
+        updatedEpic.setId(epic1.getId());
+        taskManager.updateEpic(updatedEpic);
+        System.out.println("Обновленный эпик " + updatedEpic);
         // Проверка добавления эпика
         Epic epic = taskManager.getEpicById(1); //
         if (epic != null) {
@@ -16,11 +22,19 @@ public class Main {
         Task task2 = new Task("Сдать финальное задание", "Отправить код на ревью и получить правки");
 
         taskManager.addTask(task1);
+        System.out.println(task1);
+        Task updatedTask = new Task("Исправить финальное задание", "Внести правки");
+        updatedTask.setId(task1.getId());
+        updatedTask.setStatus(TaskStatus.IN_PROGRESS);
+        taskManager.updateTask(updatedTask);
+        System.out.println("Обновленная задача " + updatedTask);
+
+
         taskManager.addTask(task2);
 
         taskManager.getTaskById(task1.getId());
-
         taskManager.removeTaskById(task1.getId());
+
         System.out.println("Вывод задач после удаления по айди " + task1.getId() +
                 " оставшиеся задачи: " + taskManager.getAllTasks());
 
@@ -29,6 +43,11 @@ public class Main {
         Subtask subtask2 = new Subtask("Практика", "Решить несколько задач по теории", epic.getId());
 
         taskManager.addSubtask(subtask1);
+        Subtask updatedSubtask = new Subtask("Открыть теорию", "Уроки пройдены", epic.getId());
+        updatedSubtask.setId(subtask1.getId());
+        updatedSubtask.setStatus(TaskStatus.DONE);
+        taskManager.updateSubtask(updatedSubtask);
+
         taskManager.addSubtask(subtask2);
 
         // Проверка получения подзадач для эпика

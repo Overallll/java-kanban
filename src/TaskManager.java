@@ -125,4 +125,35 @@ public class TaskManager {
             epic.setStatus(TaskStatus.IN_PROGRESS);
         }
     }
+
+    public void updateTask(Task updatedTask) {
+        Task task = tasks.get(updatedTask.getId());
+        if (task != null) {
+            task.setTitle(updatedTask.getTitle());
+            task.setDescription(updatedTask.getDescription());
+            task.setStatus(updatedTask.getStatus());
+        }
+    }
+
+    public void updateEpic(Epic updatedEpic){
+        Epic epic = epics.get(updatedEpic.getId());
+        if (epic != null) {
+            epic.setTitle(updatedEpic.getTitle());
+            epic.setDescription(updatedEpic.getDescription());
+        }
+    }
+
+    public void updateSubtask(Subtask updatedSubtask) {
+        Subtask subtask = subtasks.get(updatedSubtask.getId());
+        if (subtask != null) {
+            subtask.setTitle(updatedSubtask.getTitle());
+            subtask.setDescription(updatedSubtask.getDescription());
+            subtask.setStatus(updatedSubtask.getStatus());
+
+            Epic epic = epics.get(subtask.getEpicId());
+            if (epic != null) {
+                updateEpicStatus(epic);
+            }
+        }
+    }
 }
