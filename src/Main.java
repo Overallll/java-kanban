@@ -1,6 +1,8 @@
 public class Main {
     public static void main(String[] args) {
-        TaskManager taskManager = new TaskManager();
+        TaskManager taskManager = Managers.getDefault();
+        HistoryManager historyManager = Managers.getDefaultHistory();
+
 
         Epic epic1 = new Epic("Учеба", "Организация учебного процесса после работы");
 
@@ -20,6 +22,9 @@ public class Main {
 
         Task task1 = new Task("Сделать финальное задание", "Начать делать код");
         Task task2 = new Task("Сдать финальное задание", "Отправить код на ревью и получить правки");
+
+        historyManager.add(task1);
+        System.out.println(historyManager.getHistory()+"История просмотров");
 
         taskManager.addTask(task1);
         System.out.println(task1);
