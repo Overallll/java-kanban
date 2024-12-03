@@ -1,3 +1,8 @@
+import package_managers.HistoryManager;
+import package_managers.Managers;
+import package_managers.TaskManager;
+import tasks.*;
+
 public class Main {
     public static void main(String[] args) {
         TaskManager taskManager = Managers.getDefault();

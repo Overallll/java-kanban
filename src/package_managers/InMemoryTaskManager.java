@@ -1,3 +1,7 @@
+package package_managers;
+
+import tasks.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +11,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Epic> epics = new HashMap<>();
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
     private int nextId = 1;
-    private final HistoryManager historyManager = new InMemoryHistoryManager(); // Менеджер истории
+    private final HistoryManager historyManager = Managers.getDefaultHistory(); // Менеджер истории
 
     private int generateId() {
         return nextId++;
